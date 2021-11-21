@@ -20,6 +20,27 @@ void fillingTheArray(int arraySize, char *ptrarray) {
     }
 }
 
+//Функция сортировки выбором одномерного массива
+void sortingAnArray(int arraySize, char* ptrarray) {
+    cout << endl << endl << "Сортировка массива" << endl;
+    int j = 0;
+    int tmp = 0;
+    cout << "Массив после сортировки: ";
+    for (int i = 0; i < arraySize; i++) {
+        j = i;
+        for (int k = i; k < arraySize; k++) {
+            if (ptrarray[j] > ptrarray[k]) {
+                j = k;
+            }
+        }
+        tmp = ptrarray[i];
+        ptrarray[i] = ptrarray[j];
+        ptrarray[j] = tmp;
+        cout << ptrarray[i];
+    }
+    cout << endl;
+}
+
 int main()
 {
     setlocale(LC_ALL, "Russian");
@@ -33,5 +54,7 @@ int main()
     char* ptrarray = new char[arraySize];
     //Функция заполнения массива
     fillingTheArray(arraySize, ptrarray);
+    //Функция сортировки одномерного массива
+    sortingAnArray(arraySize, ptrarray);
     delete [] ptrarray;
 }
