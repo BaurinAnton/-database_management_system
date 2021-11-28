@@ -3,29 +3,84 @@
 #include <stdlib.h>
 using namespace std;
 
-//Функция заполнения одномерного массива
-void fillingTheArray(int arraySize, char *ptrarray) {
-    //Функция srand генерирует псевдослучайные числа относительно 
-    //возвращенного значения времени в секундах на данный момент
-    //unsigned - целое положительное число.
-    srand(unsigned(time(NULL)));
-    //Заполнение одномерного массива псевдослучайными числами и вывод одномерного массива
+/*!
+ \brief Функция заполнения массива
+ \param[in] arraySize - размер массива.
+ \param[in] *ptrarray - ссылка на первый элемент динамического массива.
+
+ Данная функция заполняет динамический массив символами char.
+ В данной функции используется генератор псевдослучайных чисел, реализуемый функцией srand().
+ Диапазон генерируемых чисел выбран такой, что генерируются char, соответствующие по таблице ASII заглавным английским буквам.
+*/
+
+void fillingArray(int arraySize, char* ptrarray);
+
+/*!
+ \brief Функция сортировки массива
+ \param[in] arraySize - размер массива.
+ \param[in] *ptrarray - ссылка на первый элемент динамического массива.
+
+ Данная функция сортирует элементы динамического массива по возрастанию методом выбора.
+*/
+
+void sortingAnArray(int arraySize, char* ptrarray);
+
+/*!
+ \brief Функция вывода динамического массива в консоль.
+ \param[in] arraySize - размер массива.
+ \param[in] *ptrarray - ссылка на первый элемент динамического массива.
+
+ Данная функция выводит элементы динамического массива в консоль.
+*/
+
+void outputAnArrayToConsole(int arraySize, char* ptrarray);
+
+/*!
+ \brief Функция очистки памяти динамического массива.
+ \param[in] *ptrarray - ссылка на первый элемент динамического массива.
+
+ Данная функция очищает память, выделенную под динамический массив.
+*/
+
+void clearingMemoryFromAnArray(char* ptrarray);
+
+/*!
+ \brief Главная функция.
+ В данной функции вводится с клавиатуры размер будущего динамического массива.
+ Инициализируется динамический массив.
+ Выполняются функции заполнения, сортировки, вывода на консоль, очистки памяти динамического массива.
+*/
+
+int main()
+{
+    setlocale(LC_ALL, "Russian");
+    int arraySize;
+    cout << "Введите размер одномерного массива:";
+    cin >> arraySize;
+    char* ptrarray = new char[arraySize];
+    fillingArray(arraySize, ptrarray);
     cout << endl << "Заполнения массива псевдослучайными числами";
     cout << endl << "Одномерный массив = ";
+    outputAnArrayToConsole(arraySize, ptrarray);
+    cout << endl << "Сортировка массива" << endl;
+    sortingAnArray(arraySize, ptrarray);
+    outputAnArrayToConsole(arraySize, ptrarray);
+    clearingMemoryFromAnArray(ptrarray);
+}
+
+void fillingArray(int arraySize, char* ptrarray) {
+    const int initialValueOfTheRange = 65;
+    const int finalValueOfTheRange = 90;
+    const int rangeOffset = 1;
+    srand(unsigned(time(NULL)));
     for (int count = 0; count < arraySize; count++) {
-        //Данный диапазон чисел по таблице ASII - заглавные буквы английского алфавита
-        //Причина данного диапазона - наглядное отображения одномерного массива в консоли
-        ptrarray[count] = 65 + rand() % (90 - 65 + 1);
-        cout << ptrarray[count];
+        ptrarray[count] = initialValueOfTheRange + rand() % (finalValueOfTheRange - initialValueOfTheRange + rangeOffset);
     }
 }
 
-//Функция сортировки выбором одномерного массива
 void sortingAnArray(int arraySize, char* ptrarray) {
-    cout << endl << endl << "Сортировка массива" << endl;
     int j = 0;
     int tmp = 0;
-    cout << "Массив после сортировки: ";
     for (int i = 0; i < arraySize; i++) {
         j = i;
         for (int k = i; k < arraySize; k++) {
@@ -36,25 +91,18 @@ void sortingAnArray(int arraySize, char* ptrarray) {
         tmp = ptrarray[i];
         ptrarray[i] = ptrarray[j];
         ptrarray[j] = tmp;
-        cout << ptrarray[i];
+    }
+}
+void outputAnArrayToConsole(int arraySize, char* ptrarray) {
+    for (int count = 0; count < arraySize; count++) {
+        cout << ptrarray[count];
     }
     cout << endl;
 }
-
-int main()
-{
-    setlocale(LC_ALL, "Russian");
-    //Объявление переменной размерности одномерного массива
-    int arraySize;
-    cout << "Введите размер одномерного массива:";
-    //Ввод размерности одномерного массива
-    cin >> arraySize;
-    //Объявление динамического одномерного массива
-    //* ptrarray - адрес первого элемента массива
-    char* ptrarray = new char[arraySize];
-    //Функция заполнения массива
-    fillingTheArray(arraySize, ptrarray);
-    //Функция сортировки одномерного массива
-    sortingAnArray(arraySize, ptrarray);
-    delete [] ptrarray;
+void clearingMemoryFromAnArray(char* ptrarray) {
+    if (ptrarray != nullptr)
+    {
+        delete[] ptrarray;
+        ptrarray = nullptr;
+    }
 }
