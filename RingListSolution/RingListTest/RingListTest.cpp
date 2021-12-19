@@ -3,9 +3,9 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-namespace CircularSinglyLinkedListTest
+namespace RingListTest
 {
-	TEST_CLASS(CircularSinglyLinkedListTest)
+	TEST_CLASS(RingListTest)
 	{
 	public:
 		

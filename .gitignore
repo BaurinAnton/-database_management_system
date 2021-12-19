@@ -1,4 +1,8 @@
 doc/
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+x64/
 
 # User-specific files
 *.rsuser
