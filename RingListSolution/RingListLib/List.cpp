@@ -42,26 +42,6 @@ void List::addItem(const int dataItem)
 	sizeList++;
 }
 
-void List::read()
-{
-	setlocale(LC_ALL, "Russian");
-	Node *tempHead = head;
-	size_t temp = this->size();
-	if (head == nullptr) 
-	{
-		cout << "Список пуст.";
-	}
-	else 
-	{
-		while (temp != 0)
-		{
-			cout << tempHead->dataItem << " ";
-			tempHead = tempHead->nextItem;
-			temp--;
-		}
-	}
-}
-
 const size_t List::size()
 {
 	return sizeList;
