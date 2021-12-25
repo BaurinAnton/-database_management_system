@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../RingListLib/List.h"
+#include <fstream>
 
 /*!
  \brief Функция добавления элемента в список.
@@ -52,10 +53,11 @@ void searchItem(List &ringList);
 void deleteItem(List &ringList);
 
 /*!
- \brief Функция работы итератора по элементам списка.
+ \brief Функция сохранения элементов списка в файл.
  \param[in] List &ringList - адрес на объект ringList класса List.
 
- Функция UX-представления работы функции итератора по элементам из циклического односвязного списка.
+ Функция UX-представления работы функции сохранения 
+ элементов циклического односвязного списка.
 */
 
-void iteratorItem(List &ringList);
+void saveList(List& ringList);

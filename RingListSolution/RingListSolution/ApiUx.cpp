@@ -14,8 +14,7 @@ void readList(List &ringList)
     const size_t emptyList = 0;
     if (ringList.size() != emptyList) {
         cout << endl << "Элементы списка: ";
-        ringList.read();
-        cout << endl;
+        cout << ringList << endl;
     }
     else {
         cout << endl << "Список пуст. Заполните список." << endl;
@@ -44,10 +43,9 @@ void updateItemList(List &ringList)
 void searchItem(List &ringList)
 {
     int item;
-    vector<int> numberItem;
     cout << endl << "Введите элемент, который хотите найти: ";
     cin >> item;
-    ringList.searchItem(item, numberItem);
+    const vector<int> numberItem = ringList.searchItem(item);
     if (numberItem.size() == 0) {
         cout << endl << "Увы, но элемент " << item << " не найден." << endl;
     }
@@ -78,9 +76,13 @@ void deleteItem(List &ringList)
     cout << endl;
 }
 
-void iteratorItem(List &ringList)
+void saveList(List& ringList)
 {
-    cout << "Итератор запущен." << endl;
-    ringList.iteratorItem();
-    cout << endl;
+    ofstream out;          
+    out.open("../hello.txt"); 
+    if (out.is_open())
+    {
+        out << ringList << endl;
+    }
+    cout << "Объект записан!" << endl;
 }

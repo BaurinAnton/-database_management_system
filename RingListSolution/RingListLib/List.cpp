@@ -1,44 +1,53 @@
 #include "pch.h"
 #include "List.h"
 
+const vector<int> List::getList()
+{
+	Node* tempHead = head;
+	vector<int> list;
+	for (size_t count = 0; count < this->size(); count++) {
+		list.push_back(tempHead->dataItem);
+		tempHead = tempHead->nextItem;
+	}
+	return list;
+}
+
 List::~List()
 {
-	while (sizeList != 0)
+	while (this->size() != 0)
 	{
-		Node *temp = Head->nextItem;
-		if (Head != nullptr)
+		Node *temp = head->nextItem;
+		if (head != nullptr)
 		{
-			delete Head;
-			Head = nullptr;
+			delete head;
+			head = nullptr;
 		}
-		Head = temp;
+		head = temp;
 		sizeList--;
 	}
 }
 
 void List::addItem(const int dataItem)
 {
-	sizeList++;
-	Node *temp = new Node;
-	temp->nextItem = Head;
-	temp->dataItem = dataItem;
-	if (Head != nullptr)
+	Node* temp = new Node(dataItem, head);
+	if (head != nullptr)
 	{
-		Tail->nextItem = temp;
-		Tail = temp;
+		tail->nextItem = temp;
+		tail = temp;
 	}
 	else 
 	{
-		Head = Tail = temp;
+		head = tail = temp;
 	}
+	sizeList++;
 }
 
 void List::read()
 {
 	setlocale(LC_ALL, "Russian");
-	Node *tempHead = Head;
-	size_t temp = sizeList;
-	if (Head == nullptr) 
+	Node *tempHead = head;
+	size_t temp = this->size();
+	if (head == nullptr) 
 	{
 		cout << "Список пуст.";
 	}
@@ -53,14 +62,14 @@ void List::read()
 	}
 }
 
-size_t List::size()
+const size_t List::size()
 {
 	return sizeList;
 }
 
 void List::updateItem(const size_t numberItem, const int setDataItem)
 {
-	Node* tempHead = Head;
+	Node* tempHead = head;
 	size_t temp = numberItem;
 	const size_t beginningItem = 1;
 	while (temp != beginningItem)
@@ -71,57 +80,58 @@ void List::updateItem(const size_t numberItem, const int setDataItem)
 	tempHead->dataItem = setDataItem;
 }
 
-void List::searchItem(const size_t searchItem, vector<int> &setSearch)
-{
-	Node *tempHead = Head;
-	size_t temp = sizeList;
+const vector<int> List::searchItem(const size_t searchItem) {
+	Node* tempHead = head;
+	size_t temp = this->size();
 	const size_t correctionNumberItem = 1;
+	vector<int> setSearch;
 	while (temp != 0)
 	{
 		if (tempHead->dataItem == searchItem) {
-			setSearch.push_back(sizeList - temp + correctionNumberItem);
+			setSearch.push_back(this->size() - temp + correctionNumberItem);
 		}
 		tempHead = tempHead->nextItem;
 		temp--;
 	}
+	return setSearch;
 }
 
 void List::deleteItem(const size_t numberItem)
 {
 	const size_t singleNumberItem = 1;
 	const size_t previousNumberItem = 1;
-	Node *tempNode = Head;
+	Node *tempNode = head;
 	if (numberItem == singleNumberItem) {
-		if (sizeList == singleNumberItem) {
+		if (this->size() == singleNumberItem) {
 			if (tempNode != nullptr)
 			{
 				delete tempNode;
 				tempNode = nullptr;
 			}
-			Head = nullptr;
-			Tail = nullptr;
+			head = nullptr;
+			tail = nullptr;
 		}
 		else {
-			Tail->nextItem = Head->nextItem;
-			if (Head != nullptr)
+			tail->nextItem = head->nextItem;
+			if (head != nullptr)
 			{
-				delete Head;
-				Head = nullptr;
+				delete head;
+				head = nullptr;
 			}
-			Head = Tail->nextItem;
+			head = tail->nextItem;
 		}
 	}
-	else if (numberItem == sizeList) {
-		for (size_t i = 1; i < sizeList - previousNumberItem; i++) {
+	else if (numberItem == this->size()) {
+		for (size_t i = 1; i < this->size() - previousNumberItem; i++) {
 			tempNode = tempNode->nextItem;
 		}
-		tempNode->nextItem = Tail->nextItem;
-		if (Tail != nullptr)
+		tempNode->nextItem = tail->nextItem;
+		if (tail != nullptr)
 		{
-			delete Tail;
-			Tail = nullptr;
+			delete tail;
+			tail = nullptr;
 		}
-		Tail = tempNode;
+		tail = tempNode;
 	}
 	else {
 		for (size_t i = 1; i < numberItem - previousNumberItem; i++) {
@@ -138,20 +148,10 @@ void List::deleteItem(const size_t numberItem)
 	sizeList--;
 }
 
-void List::iteratorItem()
+ostream& operator<< (ostream& shift, List& point)
 {
-	Node *tempHead = Head;
-	size_t temp = sizeList;
-	const size_t previousNumberItem = 1;
-	vector<int> list;
-	vector<int> ::iterator iterator;
-	while (temp != 0)
-	{
-		list.push_back(tempHead->dataItem);
-		tempHead = tempHead->nextItem;
-		temp--;
-	}
-	for (iterator = list.begin(); iterator <= list.end() - previousNumberItem; iterator++) {
-		cout << endl << "Разыменованный элемент: " << *iterator << " ";
-	}
+	vector<int> list = point.getList();
+	for (vector<int>::iterator it = list.begin(); it != list.end(); it++)
+		shift << *it << " ";
+	return shift;
 }

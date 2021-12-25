@@ -31,7 +31,7 @@ void menu(List &ringList)
             system("pause");
             break;
         case '6':
-            iteratorItem(ringList);
+            saveList(ringList);
             system("pause");
             break;
         }
@@ -46,7 +46,7 @@ void printMenu()
     cout << "\n3. Изменение элемента списка";
     cout << "\n4. Поиск элемента из списка";
     cout << "\n5. Удаление элемента из списка";
-    cout << "\n6. Запустить итератор" << endl;
+    cout << "\n6. Сохранить объект класса в файл";
     cout << "\nВведите 'q' и нажмите ENTER для выхода из программы" << endl;
     cout << "\nВведите пункт из меню и нажмите ENTER: ";
 }

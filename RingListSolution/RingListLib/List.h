@@ -19,6 +19,12 @@ class Node
 	int dataItem;
 	Node *nextItem;
 	friend class List;
+public:
+	Node(int dataItem, Node *nextItem)
+	{
+		this->nextItem = nextItem;
+		this->dataItem = dataItem;
+	}
 };
 
 /*!
@@ -34,8 +40,21 @@ class Node
 
 class List
 {
-	Node *Head, *Tail;
+	Node *head;
+	Node *tail;
 	size_t sizeList;
+
+	/*!
+	 \brief Приватный метод получения элементов списка.
+	 \return Вектор элементов списка
+
+	 Приватный метод получения элементов списка циклического односвязного списка.
+	 Его предназначение - дальнейшее использование в переопределении 
+	 оператора сдвига <<.
+	*/
+
+	const vector<int> getList();
+	friend ostream& operator<< (ostream& shift, List& pointList);
 public:
 
 	/*!
@@ -45,7 +64,7 @@ public:
 	 Head (начало списка) и Tail (конец списка) nullptr (нулевые значения).
 	*/
 
-	List() :Head(nullptr), Tail(nullptr), sizeList(0) {};
+	List() :head(nullptr), tail(nullptr), sizeList(0) {};
 
 	/*!
 	 \brief Деструктор.
@@ -70,6 +89,15 @@ public:
 	void addItem(const int dataItem);
 
 	/*!
+	 \brief Метод вывода количества элементов списка.
+	 \return sizeList - Переменная типа size_t количества элементов списка
+
+	 Метод класса вывода количества элеметов циклического односвязного списка.
+	*/
+
+	const size_t size();
+
+	/*!
 	 \brief Метод класса чтения списка.
 
 	 Метод класса чтения циклического односвязного списка.
@@ -80,21 +108,11 @@ public:
 
 	void read();
 
-	/*!
-	 \brief Метод вывода количества элементов списка.
-	 \return sizeList - Переменная типа size_t количества элементов списка
-
-	 Метод класса вывода количества элеметов циклического односвязного списка.
-	*/
-
-	size_t size();
 
 	/*!
 	 \brief Метод класса изменения значения элемента списка.
-	 \param[in] const size_t numberItem - номер элемента, подверженному изменению,
-	 введеный с клавиатуры.
-	 \param[in] const int setDataItem - значение элемента, подверженному изменению,
-	 введеный с клавиатуры.
+	 \param[in] const size_t numberItem - номер элемента, подверженному изменению.
+	 \param[in] const int setDataItem - значение элемента, подверженному изменению.
 
 	 Метод класса изменения значения элемента циклического односвязного списка.
 	*/
@@ -111,7 +129,7 @@ public:
 	 Метод класса поиска элемента циклического односвязного списка.
 	*/
 
-	void searchItem(const size_t searchItem, vector<int> &setSearch);
+	const vector<int> searchItem(const size_t searchItem);
 
 	/*!
 	 \brief Метод класса удаления элемента списка.
@@ -127,17 +145,5 @@ public:
 	*/
 
 	void deleteItem(const size_t numberItem);
-
-	/*!
-	 \brief Метод класса собственного итератора списка.
-
-	 Метод класса собственного итератора циклического односвязного списка.
-	 Данный итератор перебирает элементы в контейнере стандартной библиотеки С++ - Vector
-	 и предоставляет доступ к отдельным элементам.
-	 Для демонстрации собственного итератора был создан цикл, который выводит в консоль
-	 разыменованные указатели элементов списка.
-	*/
-
-	void iteratorItem();
 };
 
