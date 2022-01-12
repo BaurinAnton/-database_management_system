@@ -47,6 +47,16 @@ const size_t List::size()
 	return sizeList;
 }
 
+int List::readItem(const int numberItem)
+{
+	Node* tempNode = head;
+	for (size_t i = 1; i < numberItem; i++) {
+		tempNode = tempNode->nextItem;
+	}
+	int item = tempNode->dataItem;
+	return item;
+}
+
 void List::updateItem(const size_t numberItem, const int setDataItem)
 {
 	Node* tempHead = head;
