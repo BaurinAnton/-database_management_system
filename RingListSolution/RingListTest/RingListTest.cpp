@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CppUnitTest.h"
 #include "../RingListLib/List.h"
+#include <sstream>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -243,6 +244,32 @@ namespace RingListTest
 			ring.addItem(-634);
 			ring.addItem(130);
 			Assert::AreNotEqual(7, ring.readItem(0));
+		}
+		TEST_METHOD(Operator_ZeroItem_Succes)
+		{
+			/*Проверка корректной работы переопределения оператора сдвига <<,
+			когда список пуст, с помощью объекта строкового потока*/
+			List ring;
+			std::stringstream ss;
+			ss << ring;
+			string test = "";
+			Assert::AreEqual(ss.str(), test);
+		}
+		TEST_METHOD(Operator_NonZeroItem_Succes)
+		{
+			/*Проверка корректной работы переопределения оператора сдвига <<,
+			когда список заполнен, с помощью объекта строкового потока*/
+			List ring;
+			ring.addItem(10);
+			ring.addItem(-3211);
+			ring.addItem(11240);
+			ring.addItem(342);
+			ring.addItem(-634);
+			ring.addItem(130);
+			std::stringstream ss;
+			ss << ring;
+			string test = "10 -3211 11240 342 -634 130 ";
+			Assert::AreEqual(ss.str(), test);
 		}
 	};
 }
