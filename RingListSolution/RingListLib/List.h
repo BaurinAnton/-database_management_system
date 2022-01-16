@@ -54,7 +54,45 @@ class List
 	*/
 
 	const vector<int> getList();
+
+	/*!
+	 \brief Переопределение оператора <<.
+	 \param[in] ostream& shift - ссылка на объект ostream.
+	 \param[in] ostream& shift - ссылка на объект List.
+
+	 Переопределение оператора сдвига << для класса List.
+	*/
+
 	friend ostream& operator<< (ostream& shift, List& pointList);
+
+	/*!
+	 \brief Запрет конструктора копирования.
+	 \param[in] const List& - ссылка на List
+	*/
+
+	List(const List&) = delete;
+
+	/*!
+	 \brief Запрет оператора присваивания копирования.
+	 \param[in] const List& - ссылка на List
+	*/
+
+	List& operator=(const List&) = delete;
+
+	/*!
+	 \brief Запрет конструктора перемещения.
+	 \param[in] const List&& - ссылка на List
+	*/
+
+	List(List&&) = delete;
+
+	/*!
+	 \brief Запрет оператора присваивания перемещения.
+	 \param[in] const List&& - ссылка на List
+	*/
+
+	List& operator=(const List&&) = delete;
+
 public:
 
 	/*!
